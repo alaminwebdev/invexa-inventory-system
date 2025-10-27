@@ -32,13 +32,13 @@
                     </div>
                 </div>
                 <div class="dropdown-divider"></div>
-                <a href="{{ route('admin.logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="dropdown-item">
-                    <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
+                <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="dropdown-item">
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                         {{ csrf_field() }}
                     </form>
                     <i class="fa fa-power-off mr-2"></i> Logout
                 </a>
-                <a href="{{ route('admin.change-password') }}" class="dropdown-item">
+                <a href="{{ route('password.confirm') }}" class="dropdown-item">
                     <i class="fa fa-lock mr-2"></i> Change Password
                 </a>
                 <div class="dropdown-divider"></div>

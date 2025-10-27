@@ -219,7 +219,7 @@
                                         <img src="{{ asset('common/images/icon1.png') }}" alt="stock-in">
                                     </div>
                                     <div class="text pt-1">
-                                        <a href="{{ route('admin.stock.in.product.selection') }}">Add stock</a>
+                                        <a href="{{ route('stock.in.product.selection') }}">Add stock</a>
                                     </div>
                                 </div>
                             </div>
@@ -230,7 +230,7 @@
                                         <img src="{{ asset('common/images/icon2.png') }}" alt="product-reecive">
                                     </div>
                                     <div class="text pt-1">
-                                        <a href="{{ route('admin.report.current.stock.in.list') }}">Current stock</a>
+                                        <a href="{{ route('report.current.stock.in.list') }}">Current stock</a>
                                     </div>
                                 </div>
                             </div>
@@ -244,7 +244,7 @@
                         <div class="card-header border-0 pb-0 pt-3">
                             <h4 class="card-title">Most demanded product<span>( Latest 10 reports )</span></h4>
                             <div class="card-tools mr-0 d-flex align-items-center">
-                                <a href="{{ route('admin.product.statistics') }}" class="btn btn-sm btn-light mr-1"
+                                <a href="{{ route('product.statistics') }}" class="btn btn-sm btn-light mr-1"
                                     style="font-size: 11px !important;"><i class="fas fa-list mr-1"></i> More</a>
                                 <div class="dropdown show">
                                     <a class="btn btn-sm btn-light" data-toggle="dropdown" href="#" aria-expanded="true"
@@ -415,7 +415,7 @@
                     <div class="card-header border-0 pb-0 pt-3">
                         <h4 class="card-title">Most stocked products <span>( Latest 10 reports )</span></h4>
                         <div class="card-tools mr-0 d-flex align-items-center">
-                            <a href="{{ route('admin.dashboard.stock-in-products') }}" class="btn btn-sm btn-light mr-1"
+                            <a href="{{ route('dashboard.stock-in-products') }}" class="btn btn-sm btn-light mr-1"
                                 style="font-size: 11px !important;"><i class="fas fa-list mr-1"></i> More</a>
                             <div class="dropdown show">
                                 <a class="btn btn-sm btn-light" data-toggle="dropdown" href="#" aria-expanded="true"
@@ -472,7 +472,7 @@
                     <div class="card shadow-sm">
                         <div class="card-header border-0">
                             <h4 class="card-title">Requisition <span>( Latest 10 reports )</span></h4>
-                            <a href="{{ route('admin.section.requisition.list') }}" class="btn btn-sm btn-light"
+                            <a href="{{ route('section.requisition.list') }}" class="btn btn-sm btn-light"
                                 style="font-size: 11px !important;"><i class="fas fa-list mr-1"></i> More</a>
                         </div>
                         <div class="card-body pt-0">
@@ -511,7 +511,7 @@
                     <div class="card shadow-sm">
                         <div class="card-header border-0">
                             <h4 class="card-title">Last received product <span>( Latest 10 reports )</span></h4>
-                            <a href="{{ route('admin.dashboard.received-products') }}" class="btn btn-sm btn-light"
+                            <a href="{{ route('dashboard.received-products') }}" class="btn btn-sm btn-light"
                                 style="font-size: 11px !important;"><i class="fas fa-list mr-1"></i> More</a>
                         </div>
                         <div class="card-body pt-0">
@@ -585,7 +585,7 @@
 
                 document.getElementById('loading-spinner').style.display = 'block';
                 $.ajax({
-                    url: "{{ route('admin.get.requistion.details.by.id') }}",
+                    url: "{{ route('get.requistion.details.by.id') }}",
                     type: "GET",
                     data: {
                         requisition_id: requistionID
@@ -823,7 +823,7 @@
                 }
             });
             $.ajax({
-                url: "{{ route('admin.dashboard.total-requisition-products') }}",
+                url: "{{ route('dashboard.total-requisition-products') }}",
                 type: "POST",
                 data: {
                     date_from: most_req_date_from,
@@ -1061,7 +1061,7 @@
                     }
                 });
                 $.ajax({
-                    url: "{{ route('admin.dashboard.requisition-info-by-department') }}",
+                    url: "{{ route('dashboard.requisition-info-by-department') }}",
                     type: "POST",
                     data: {
                         date_from: date_from,
@@ -1475,7 +1475,7 @@
                 }
             });
             $.ajax({
-                url: "{{ route('admin.dashboard.total-products-in-requisition-by-section') }}",
+                url: "{{ route('dashboard.total-products-in-requisition-by-section') }}",
                 type: "POST",
                 data: {
                     date_from: req_date_from,
@@ -1721,7 +1721,7 @@
                 }
             });
             $.ajax({
-                url: "{{ route('admin.dashboard.total-stock-products') }}",
+                url: "{{ route('dashboard.total-stock-products') }}",
                 type: "POST",
                 data: {
                     date_from: stock_date_from,
