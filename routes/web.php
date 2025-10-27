@@ -1,48 +1,52 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Auth\NewPasswordController;
+use App\Http\Controllers\Auth\PasswordResetLinkController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Admin\DefaultController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Auth\ChangePasswordController;
-use App\Http\Controllers\Auth\ForgotPasswordController;
-use App\Http\Controllers\Auth\ResetPasswordController;
 
-// Storage link helper
-Route::get('storage-link', function () {
-    \Artisan::call('storage:link');
-});
-
-// Default redirect to admin login
 Route::get('/', function () {
-    return redirect()->route('admin.login');
+    return redirect()->route('login');
 });
 
-/*
-|--------------------------------------------------------------------------
-| Admin Routes
-|--------------------------------------------------------------------------
-*/
-Route::prefix('admin')->group(function () {
-    Route::get('login', [LoginController::class, 'showLoginForm'])->name('admin.login');
-    Route::post('login', [LoginController::class, 'login']);
-    Route::post('logout', [LoginController::class, 'logout'])->name('admin.logout');
+Route::middleware('guest')->group(function () {
+    Route::get('login', [AuthenticatedSessionController::class, 'create'])
+        ->name('login');
 
-    Route::get('login-as-viewer', [LoginController::class, 'loginAsViewer'])->name('admin.login-as-viewer');
+    Route::post('login', [AuthenticatedSessionController::class, 'store']);
 
-    Route::get('change-password', [ChangePasswordController::class, 'changePassword'])
-        ->name('admin.change-password');
-    Route::post('change-password', [ChangePasswordController::class, 'updatePassword'])
-        ->middleware('checkUserRole')
-        ->name('admin.update-password');
+    Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
+        ->name('password.request');
 
-    Route::get('password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])
-        ->name('admin.password.request');
-    Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])
-        ->name('admin.password.email');
-    Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])
-        ->name('admin.password.reset');
-    Route::post('password/reset', [ResetPasswordController::class, 'reset'])
-        ->name('admin.password.update');
+    Route::post('forgot-password', [PasswordResetLinkController::class, 'store'])
+        ->name('password.email');
 
-    // Include all other admin routes from admin.php
-    Route::group([], base_path('routes/admin.php'));
+    Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])
+        ->name('password.reset');
+
+    Route::post('reset-password', [NewPasswordController::class, 'store'])
+        ->name('password.store');
 });
+
+Route::middleware('auth')->group(function () {
+
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+
+    // Default Controller routes
+    Route::get('/get-products-by-type', [DefaultController::class, 'getProductsByType'])->name('get.products.by.type');
+    Route::get('/get-sections-by-department', [DefaultController::class, 'getSectionsByDepartment'])->name('get.sections.by.department');
+    Route::get('/get-products-by-section-requisition', [DefaultController::class, 'getProductsBySectionRequisition'])->name('get.products.by.section.requisition');
+    Route::get('/get-employee-by-id', [DefaultController::class, 'getEmployeeById'])->name('get.employee.by.id');
+
+
+    Route::prefix('admin')->name('admin.')->group(function () {
+        require __DIR__ . '/admin.php';
+    });
+});
+
+require __DIR__ . '/auth.php';
