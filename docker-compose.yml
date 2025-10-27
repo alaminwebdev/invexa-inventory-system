@@ -1,0 +1,61 @@
+version: '3.8'  
+
+services:
+  app:
+    image: php:8.2-fpm
+    container_name: inventory-app
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+    networks:
+      - inventory
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+  web:
+    image: nginx:alpine
+    container_name: inventory-web
+    depends_on:
+      - app
+    ports:
+      - "8000:80"
+    volumes:
+      - ./:/var/www
+      - ./docker/nginx/conf.d:/etc/nginx/conf.d
+    networks:
+      - inventory
+
+  db:
+    image: mysql:8.0
+    container_name: inventory-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: laravel-inventory
+      MYSQL_USER: inventory
+      MYSQL_PASSWORD: inventory
+    ports:
+      - "3306:3306"
+    networks:
+      - inventory
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: inventory-phpmyadmin
+    depends_on:
+      - db
+    environment:
+      PMA_HOST: db
+      PMA_USER: inventory
+      PMA_PASSWORD: inventory
+      PMA_ARBITRARY: 1
+    ports:
+      - "8081:80"
+    networks:
+      - inventory
+
+
+networks:
+  inventory:
+    driver: bridge
