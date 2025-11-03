@@ -24,14 +24,6 @@ return new class extends Migration
             $table->softDeletes();
             $table->timestamps();
         });
-
-        $now = now();
-
-        // Seed data
-        DB::table('modules')->insert([
-            ['id' => 1, 'name' => 'Moduleless', 'status' => 1, 'sort' => null, 'color' => null, 'created_by' => null, 'updated_by' => null, 'deleted_by' => null, 'created_at' => $now, 'updated_at' => $now],
-            ['id' => 2, 'name' => 'Master setup', 'status' => 1, 'sort' => null, 'color' => null, 'created_by' => null, 'updated_by' => null, 'deleted_by' => null, 'created_at' => $now, 'updated_at' => $now],
-        ]);
     }
 
     /**

@@ -22,21 +22,6 @@ return new class extends Migration
             $table->softDeletes();
             $table->timestamps();
         });
-
-        // Seed initial data
-        DB::table('user_roles')->insert([
-            [
-                'id' => 1,
-                'user_id' => 1,
-                'role_id' => 1,
-                'created_by' => 1,
-                'updated_by' => null,
-                'deleted_by' => null,
-                'deleted_at' => null,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]
-        ]);
     }
 
     /**

@@ -25,38 +25,6 @@ return new class extends Migration
             $table->softDeletes();
             $table->timestamps();
         });
-
-        // Seed initial roles
-        DB::table('roles')->insert([
-            [
-                'id' => 1,
-                'name' => 'Developer',
-                'description' => null,
-                'status' => 1,
-                'is_super_power' => 1,
-                'sort' => null,
-                'created_by' => null,
-                'updated_by' => null,
-                'deleted_by' => null,
-                'deleted_at' => null,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id' => 2,
-                'name' => 'Super Admin',
-                'description' => null,
-                'status' => 1,
-                'is_super_power' => 1,
-                'sort' => null,
-                'created_by' => null,
-                'updated_by' => null,
-                'deleted_by' => null,
-                'deleted_at' => null,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-        ]);
     }
 
     /**

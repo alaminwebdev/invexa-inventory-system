@@ -27,17 +27,6 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        // Seed example data
-        $now = now();
-
-        DB::table('menu_routes')->insert([
-            ['name' => 'Add',    'menu_id' => 17, 'section_or_route' => 'route', 'sort' => 1, 'route' => 'admin.role-management.role-info.add', 'status' => 1, 'created_by' => 1, 'created_at' => $now, 'updated_at' => $now],
-            ['name' => 'Edit',   'menu_id' => 17, 'section_or_route' => 'route', 'sort' => 2, 'route' => 'admin.role-management.role-info.edit', 'status' => 1, 'created_by' => 1, 'created_at' => $now, 'updated_at' => $now],
-            ['name' => 'Delete', 'menu_id' => 17, 'section_or_route' => 'route', 'sort' => 3, 'route' => 'admin.role-management.role-info.destroy', 'status' => 1, 'created_by' => 1, 'created_at' => $now, 'updated_at' => $now],
-            ['name' => 'Add',    'menu_id' => 23, 'section_or_route' => 'route', 'sort' => 1, 'route' => 'admin.user-management.user-info.add', 'status' => 1, 'created_by' => 1, 'created_at' => $now, 'updated_at' => $now],
-            ['name' => 'Edit',   'menu_id' => 23, 'section_or_route' => 'route', 'sort' => 2, 'route' => 'admin.user-management.user-info.edit', 'status' => 1, 'created_by' => 1, 'created_at' => $now, 'updated_at' => $now],
-            ['name' => 'Delete', 'menu_id' => 23, 'section_or_route' => 'route', 'sort' => 3, 'route' => 'admin.user-management.user-info.destroy', 'status' => 1, 'created_by' => 1, 'created_at' => $now, 'updated_at' => $now],
-        ]);
     }
 
     /**
