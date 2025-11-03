@@ -4,8 +4,8 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\Admin\DefaultController;
-use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\DefaultController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -64,7 +64,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/get-requistion-by-status-for-recommender', [DefaultController::class, 'getRequistionByStatusForRecommender'])->name('get.requistion.by.status.for.recommender');
 
 
-    require __DIR__ . '/admin.php';
+    require __DIR__ . '/modules/site_setting_management.php';
+    require __DIR__ . '/modules/system_setup.php';
+    require __DIR__ . '/modules/employee_management.php';
+    require __DIR__ . '/modules/product_management.php';
+    require __DIR__ . '/modules/requisition_management.php';
+    require __DIR__ . '/modules/report_management.php';
 });
 
 require __DIR__ . '/auth.php';

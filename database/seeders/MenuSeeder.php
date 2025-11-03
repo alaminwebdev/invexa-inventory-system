@@ -42,10 +42,9 @@ class MenuSeeder extends Seeder
 
         // Sub Menus for Site Setting Management
         $siteSettingSubmenus = [
-            ['name' => 'Site Setting', 'url_path' => 'admin/site-setting-management/site-setting-info/list', 'sort' => 1, 'icon' => 'ion-arrow-shrink'],
-            ['name' => 'Email Configuration', 'url_path' => 'admin/site-setting-management/email-configuration-info/list', 'sort' => 2, 'icon' => 'ion-arrow-shrink'],
-            ['name' => 'Module', 'url_path' => 'admin/site-setting-management/module-info/list', 'sort' => 3, 'icon' => 'ion-log-in'],
-            ['name' => 'Menu', 'url_path' => 'admin/site-setting-management/menu-info/list', 'sort' => 4, 'icon' => 'ion-arrow-shrink'],
+            ['name' => 'Site Setting', 'url_path' => 'site-setting', 'sort' => 1, 'icon' => 'ion-arrow-shrink'],
+            ['name' => 'Module', 'url_path' => 'module', 'sort' => 3, 'icon' => 'ion-log-in'],
+            ['name' => 'Menu', 'url_path' => 'menu', 'sort' => 4, 'icon' => 'ion-arrow-shrink'],
         ];
 
         foreach ($siteSettingSubmenus as $menu) {

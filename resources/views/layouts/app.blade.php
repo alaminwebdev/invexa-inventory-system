@@ -2,634 +2,256 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
+    <noscript>
+        {{-- Your browser does not support JavaScript! --}}
+        <img id="noscript" src="https://cms-assets.tutsplus.com/uploads/users/30/posts/25498/preview_image/preview-tag-noscript.png" alt="Your browser does not support JavaScript!">
+        <style>
+            #noscript {
+                width: 100%;
+                height: 100vh;
+            }
+
+            div {
+                display: none;
+            }
+        </style>
+    </noscript>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="shortcut icon" href="{{ fileExist(['url' => @$site_setting->favicon, 'type' => 'favicon']) }}" type="image/x-icon">
+    <link rel="icon" href="{{ fileExist(['url' => @$site_setting->favicon, 'type' => 'favicon']) }}" type="image/x-icon">
+    <title>{{ @$site_setting->title_suffix ? @$site_setting->title_suffix : 'Project Name' }} | {{ @$title ?? 'Dashboard' }}</title>
 
-    <title>@yield('title', 'Invexa Inventory System')</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
 
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('plugins') }}/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="{{ asset('plugins') }}/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+    <link rel="stylesheet" href="{{ asset('plugins') }}/select2/css/select2.min.css">
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="{{ asset('admin') }}/dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="{{ asset('common') }}/css/common.css">
 
+    <link rel="stylesheet" href="{{ asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <script src="{{ asset('plugins') }}/jquery/jquery.min.js"></script>
+    <script src="{{ asset('plugins/amcharts/index.js') }}"></script>
+    <script src="{{ asset('plugins/amcharts/xy.js') }}"></script>
+    <script src="{{ asset('plugins/amcharts/animated.js') }}"></script>
+    <script src="{{ asset('plugins/amcharts/exporting.js') }}"></script>
     <style>
-        :root {
-            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            --glass-bg: rgba(255, 255, 255, 0.08);
-            --glass-border: rgba(255, 255, 255, 0.12);
-            --glass-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            --text-primary: #ffffff;
-            --text-secondary: rgba(255, 255, 255, 0.85);
-            --text-light: rgba(255, 255, 255, 0.6);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
-        }
-
         body {
-            background: var(--primary-gradient);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            position: relative;
-            overflow-x: hidden;
+            font-family: "Roboto", sans-serif;
         }
 
-        /* Subtle Background Animation */
-        .background-shapes {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            overflow: hidden;
+        ::-webkit-scrollbar {
+            width: 5px;
         }
 
-        .shape {
-            position: absolute;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.03);
-            filter: blur(40px);
-            animation: gentleFloat 15s ease-in-out infinite;
+        /* Track */
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
         }
 
-        .shape-1 {
-            width: 300px;
-            height: 300px;
-            top: 10%;
-            left: 5%;
-            animation-delay: 0s;
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            /* background: #888; */
+            background: linear-gradient(180deg, #5b86e5b5 0%, rgb(62, 151, 255) 100%);
+
         }
 
-        .shape-2 {
-            width: 250px;
-            height: 250px;
-            top: 60%;
-            right: 10%;
-            animation-delay: 5s;
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background: #5b86e5b5;
         }
 
-        .shape-3 {
-            width: 200px;
-            height: 200px;
-            bottom: 20%;
-            left: 15%;
-            animation-delay: 10s;
+        .content-wrapper {
+            background: linear-gradient(to left, #5b86e51f, #36d1dc0d);
         }
 
-        @keyframes gentleFloat {
-
-            0%,
-            100% {
-                transform: translate(0, 0) scale(1);
-            }
-
-            25% {
-                transform: translate(10px, -15px) scale(1.05);
-            }
-
-            50% {
-                transform: translate(-5px, 10px) scale(0.95);
-            }
-
-            75% {
-                transform: translate(15px, 5px) scale(1.02);
-            }
+        .navbar-white {
+            background: linear-gradient(to right, #923993, #36d1dc26);
+            backdrop-filter: blur(6.6px);
+            -webkit-backdrop-filter: blur(6.6px);
         }
 
-        /* Main Layout */
-        .main-wrapper {
+        table {
             width: 100%;
         }
 
-        /* Brand Section */
-        .brand-section {
-            padding: 2rem;
+        .table thead {
+            background: linear-gradient(to right, #923993, #24757b) !important;
         }
 
-        .brand-logo {
-            width: 70px;
-            height: 70px;
-            background: var(--accent-gradient);
-            border-radius: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1.5rem;
-            box-shadow: 0 15px 30px rgba(79, 172, 254, 0.3);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .brand-logo::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            transform: rotate(45deg);
-            animation: shine 3s infinite;
-        }
-
-        .brand-logo i {
-            font-size: 1.75rem;
-            color: white;
-            position: relative;
-            z-index: 1;
-        }
-
-        .brand-title {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 0.75rem;
-            background: linear-gradient(135deg, #fff, #e2e8f0);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .brand-subtitle {
-            font-size: 0.95rem;
-            color: var(--text-secondary);
-            line-height: 1.5;
-            margin-bottom: 2.5rem;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 0.875rem;
-            margin: 0 auto;
-        }
-
-        .feature-item {
-            background: rgba(255, 255, 255, 0.06);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            padding: 1.25rem;
+        .table thead th {
+            vertical-align: middle !important;
             text-align: center;
-            transition: all 0.3s ease;
+            color: #fff;
         }
 
-        .feature-item:hover {
-            transform: translateY(-3px);
-            background: rgba(255, 255, 255, 0.1);
+        .table td,
+        .table th {
+            padding: .3rem;
+            vertical-align: middle;
         }
 
-        .feature-icon {
-            width: 36px;
-            height: 36px;
-            background: var(--secondary-gradient);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 0.625rem;
-        }
-
-        .feature-icon i {
-            color: white;
-            font-size: 1rem;
-        }
-
-        .feature-text {
-            color: var(--text-secondary);
-            font-size: 0.8rem;
-            font-weight: 500;
-        }
-
-        /* Auth Form */
-        .auth-container {
-            padding: 2rem;
-        }
-
-        .auth-card {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 18px;
-            padding: 2rem;
-            box-shadow: var(--glass-shadow);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .auth-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.05), transparent);
-            transform: rotate(45deg);
-            animation: cardShine 6s infinite;
-        }
-
-        .auth-header {
-            text-align: center;
-            margin-bottom: 1.75rem;
-            position: relative;
-            z-index: 2;
-        }
-
-        .auth-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 0.375rem;
-        }
-
-        .auth-subtitle {
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-        }
-
-        /* Form Elements */
-        .form-group {
-            margin-bottom: 1.25rem;
-            position: relative;
-            z-index: 2;
-        }
-
-        .form-control {
-            width: 100%;
-            height: 46px;
-            padding: 0.875rem 2.75rem 0.875rem 2.75rem;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1.5px solid rgba(255, 255, 255, 0.15);
-            border-radius: 10px;
-            color: var(--text-primary);
-            font-size: 0.875rem;
-            transition: all 0.3s ease;
-        }
-
-        .form-control::placeholder {
-            color: var(--text-light);
-            font-size: 0.875rem;
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: rgba(255, 255, 255, 0.4);
-            background: rgba(255, 255, 255, 0.12);
-            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
-        }
-
-        .form-control:-webkit-autofill,
-        .form-control:-webkit-autofill:hover,
-        .form-control:-webkit-autofill:focus {
-            -webkit-text-fill-color: var(--text-primary);
-            -webkit-box-shadow: 0 0 0px 1000px rgba(255, 255, 255, 0.05) inset;
-            border: 1.5px solid rgba(255, 255, 255, 0.3);
-            transition: background-color 5000s ease-in-out 0s;
-            font-size: 0.875rem;
-        }
-
-        .form-icon {
-            position: absolute;
-            left: 0.875rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-light);
-            font-size: 0.875rem;
-            z-index: 2;
-        }
-
-        .password-toggle {
-            position: absolute;
-            right: 0.875rem;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            color: var(--text-light);
-            cursor: pointer;
-            padding: 0.375rem;
-            transition: color 0.3s ease;
-            z-index: 2;
-            font-size: 0.875rem;
-        }
-
-        .password-toggle:hover {
-            color: var(--text-primary);
-        }
-
-        .form-options {
+        .card-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1.25rem;
-            position: relative;
-            z-index: 2;
         }
 
-        .form-check {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .form-check-input {
-            width: 16px;
-            height: 16px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 3px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .form-check-input:checked {
-            background: var(--accent-gradient);
-            border-color: rgba(255, 255, 255, 0.5);
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m6 10 3 3 6-6'/%3e%3c/svg%3e");
-        }
-
-        .form-check-label {
-            color: var(--text-secondary);
-            font-size: 0.8rem;
-            cursor: pointer;
-        }
-
-        .forgot-link {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 0.8rem;
-            transition: color 0.3s ease;
-        }
-
-        .forgot-link:hover {
-            color: var(--text-primary);
-        }
-
-        .btn-primary {
-            width: 100%;
-            height: 46px;
-            background: var(--accent-gradient);
-            border: none;
-            border-radius: 10px;
-            color: white;
-            font-size: 0.875rem;
+        .card-header .card-title {
             font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            position: relative;
-            z-index: 2;
+            color: #2a527b;
+            text-transform: uppercase;
         }
 
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(79, 172, 254, 0.4);
+        .card-header::after {
+            content: none;
         }
 
-        .auth-footer {
-            text-align: center;
-            margin-top: 1.25rem;
-            color: var(--text-secondary);
-            font-size: 0.8rem;
-            position: relative;
-            z-index: 2;
+        .select2-container {
+            display: block;
+            width: auto !important;
         }
 
-        .auth-footer a {
-            color: var(--text-primary);
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
+        .text-gray {
+            color: #6c757d;
+        }
+        .text-navy {
+            color: #2a527b;
+        }
+        .main-footer.text-sm, .text-sm .main-footer {
+            padding: 0.55rem;
+        }
+        .main-footer {
+            background-color: #fff;
+            border-top: none;
+            color: #2a527b;
+            font-size: 12px;
+        }
+        .am5exporting-menu {
+            font-size: 12px;
         }
 
-        .auth-footer a:hover {
-            text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+        .am5exporting-menu.am5exporting-align-right,
+        .am5exporting-icon.am5exporting-align-right,
+        .am5exporting-list.am5exporting-align-right {
+            right: 6px !important;
         }
 
-        .alert {
-            padding: 0.875rem;
-            border-radius: 10px;
-            margin-bottom: 1.25rem;
+        .am5exporting-menu.am5exporting-valign-top,
+        .am5exporting-icon.am5exporting-valign-top,
+        .am5exporting-list.am5exporting-align-top {
+            top: 5px !important;
+        }
+
+        .am5exporting-icon:focus,
+        .am5exporting-icon:hover,
+        .am5exporting-menu-open .am5exporting-icon {
+            background: #ececec !important;
+            opacity: 1;
+        }
+
+        .am5exporting-list {
+            margin: 10px !important;
+            background: #ececec !important;
+            padding: 5px 0px !important;
+            border: none !important;
+        }
+
+        .am5exporting-list.am5exporting-align-right {
+            margin-right: 45px !important;
+        }
+
+        .modal {
+            background-color: rgba(255, 255, 255, 0.28);
+            -webkit-backdrop-filter: blur(0.5px);
+            backdrop-filter: blur(0.5px);
+        }
+
+        .modal-content {
             border: none;
-            backdrop-filter: blur(10px);
-            font-size: 0.8rem;
-            position: relative;
-            z-index: 2;
+            border-radius: .8rem;
+            box-shadow: 0 0.5rem 20rem rgb(0 0 0 / 17%);
+        }
+        .swal2-container .swal2-backdrop-show,
+        .swal2-container.swal2-noanimation {
+            background: #001f3f8f;
+        }
+        .swal2-icon{
+            margin-top: 10px;
+        }
+        .swal2-container .swal2-html-container {
+            margin: 0
         }
 
-        .alert-success {
-            background: rgba(72, 187, 120, 0.15);
-            color: #48bb78;
-            border: 1px solid rgba(72, 187, 120, 0.3);
+        .gradient-border {
+            background: linear-gradient(#fff, #fff) padding-box,
+              linear-gradient(45deg, #b721ff , #00bce2 ) border-box;
+            border: 1px solid transparent;
+            border-radius: 8px;
+            box-shadow: 0px 8px 18px 4px rgba(0, 195, 255, 0.1);
         }
-
-        .alert-danger {
-            background: rgba(245, 101, 101, 0.15);
-            color: #f56565;
-            border: 1px solid rgba(245, 101, 101, 0.3);
-        }
-
-        @keyframes shine {
-            0% {
-                transform: rotate(45deg) translateX(-100%);
-            }
-
-            100% {
-                transform: rotate(45deg) translateX(100%);
-            }
-        }
-
-        @keyframes cardShine {
-
-            0%,
-            100% {
-                opacity: 0;
-            }
-
-            50% {
-                opacity: 1;
-            }
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .brand-section {
-                padding: 1.5rem;
-            }
-
-            .brand-title {
-                font-size: 1.75rem;
-            }
-
-            .brand-subtitle {
-                font-size: 0.9rem;
-                margin-bottom: 2rem;
-            }
-
-            .features-grid {
-                grid-template-columns: 1fr;
-                gap: 0.75rem;
-                max-width: 280px;
-            }
-
-            .feature-item {
-                padding: 1rem;
-            }
-
-            .auth-card {
-                padding: 1.75rem 1.25rem;
-            }
-
-            .auth-title {
-                font-size: 1.375rem;
-            }
-
-            .auth-subtitle {
-                font-size: 0.85rem;
-            }
-
-            .form-options {
-                flex-direction: column;
-                gap: 0.875rem;
-                align-items: flex-start;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .auth-card {
-                padding: 1.5rem 1rem;
-            }
-
-            .brand-logo {
-                width: 60px;
-                height: 60px;
-            }
-
-            .brand-logo i {
-                font-size: 1.5rem;
-            }
-
-            .brand-title {
-                font-size: 1.5rem;
-            }
-
-            .form-control {
-                height: 44px;
-                font-size: 0.85rem;
-            }
-
-            .btn-primary {
-                height: 44px;
-                font-size: 0.85rem;
-            }
-        }
+        
     </style>
+
 </head>
 
-<body>
-    <!-- Subtle Background Shapes -->
-    <div class="background-shapes">
-        <div class="shape shape-1"></div>
-        <div class="shape shape-2"></div>
-        <div class="shape shape-3"></div>
-    </div>
+<body class="sidebar-mini layout-navbar-fixed layout-fixed layout-navbar-fixed layout-footer-fixed text-sm">
 
-    <div class="main-wrapper">
-        <div class="container">
-            <div class="row align-items-center justify-content-center">
-                <!-- Left Side - Branding -->
-                <div class="col-lg-5 col-md-6 mb-5 mb-md-0">
-                    <div class="brand-section">
-                        <div class="brand-logo">
-                            <i class="fas fa-cubes"></i>
+    <div class="wrapper">
+        @include('layouts.status-message')
+        @include('layouts.navbar')
+        @include('layouts.sidebar')
+        <div class="content-wrapper">
+            <div class="content-header">
+                <div class="container-fluid">
+                    {{-- <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0">Dashboard</h1>
                         </div>
-                        <div class="text-center">
-                            <h1 class="brand-title">Invexa</h1>
-                            <p class="brand-subtitle">Advanced Inventory Management System<br>Streamline your business operations</p>
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item active">Dashboard v1</li>
+                            </ol>
                         </div>
-
-                        <div class="features-grid">
-                            <div class="feature-item">
-                                <div class="feature-icon">
-                                    <i class="fas fa-chart-line"></i>
-                                </div>
-                                <div class="feature-text">Real-time Analytics</div>
-                            </div>
-                            <div class="feature-item">
-                                <div class="feature-icon">
-                                    <i class="fas fa-sync"></i>
-                                </div>
-                                <div class="feature-text">Auto Sync</div>
-                            </div>
-                            <div class="feature-item">
-                                <div class="feature-icon">
-                                    <i class="fas fa-shield-alt"></i>
-                                </div>
-                                <div class="feature-text">Secure Data</div>
-                            </div>
-                            <div class="feature-item">
-                                <div class="feature-icon">
-                                    <i class="fas fa-rocket"></i>
-                                </div>
-                                <div class="feature-text">Fast Performance</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Right Side - Auth Form -->
-                <div class="col-lg-7 col-md-6">
-                    <div class="auth-container">
-                        @yield('content')
-                    </div>
+                    </div> --}}
                 </div>
             </div>
+            <section class="content">
+                <div class="container-fluid">
+                    @yield('content')
+                </div>
+            </section>
+        </div>
+        @include('layouts.footer')
+        @include('layouts.preloader')
+
+    </div>
+    <div id="loading-spinner" style="display:none; position:fixed; z-index:9999; top:50%; left:50%; transform:translate(-50%,-50%);">
+        <div class="spinner-border text-primary" role="status">
+            <span class="sr-only">Loading...</span>
         </div>
     </div>
 
-    <!-- Bootstrap 5 JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ asset('plugins') }}/jquery-ui/jquery-ui.min.js"></script>
+    <script src="{{ asset('plugins') }}/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ asset('plugins') }}/sweetalert2/sweetalert2.min.js"></script>
+    <script src="{{ asset('plugins') }}/jquery-validation/jquery.validate.min.js"></script>
+    <script src="{{ asset('plugins') }}/jquery-validation/additional-methods.min.js"></script>
+    <script src="{{ asset('plugins') }}/select2/js/select2.full.min.js"></script>
+    <script src="{{ asset('admin') }}/dist/js/adminlte.js"></script>
+    <script src="{{ asset('plugins/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <script src="{{ asset('common') }}/js/common.js"></script>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Password toggle functionality
-            const passwordToggles = document.querySelectorAll('.password-toggle');
-            passwordToggles.forEach(toggle => {
-                toggle.addEventListener('click', function() {
-                    const input = this.parentElement.querySelector('.form-control');
-                    const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
-                    input.setAttribute('type', type);
-                    this.querySelector('i').classList.toggle('fa-eye');
-                    this.querySelector('i').classList.toggle('fa-eye-slash');
-                });
-            });
-
-            // Fix autofill background
-            const inputs = document.querySelectorAll('.form-control');
-            inputs.forEach(input => {
-                setTimeout(() => {
-                    if (input.matches(':-webkit-autofill')) {
-                        input.style.background = 'rgba(255, 255, 255, 0.12)';
-                        input.style.borderColor = 'rgba(255, 255, 255, 0.3)';
-                    }
-                }, 100);
-            });
-        });
-    </script>
 </body>
 
 </html>
