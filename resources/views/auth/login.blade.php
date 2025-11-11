@@ -58,14 +58,7 @@
                         Remember me
                     </label>
                 </div>
-
-                @if (Route::has('password.request'))
-                    <a href="{{ route('password.request') }}" class="forgot-link">
-                        Forgot Password?
-                    </a>
-                @endif
             </div>
-
             <button type="submit" class="btn btn-primary">
                 <i class="fas fa-sign-in-alt"></i>
                 Sign In

@@ -17,7 +17,6 @@ class AuthenticatedSessionController extends Controller
     public function create(): Response
     {
         return response()->view('auth.login', [
-            'canResetPassword' => Route::has('password.request'),
             'status' => session('status'),
         ]);
     }

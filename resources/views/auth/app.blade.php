@@ -8,601 +8,190 @@
 
     <title>@yield('title', 'Invexa Inventory System')</title>
 
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Include Vite for Tailwind CSS -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root {
-            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            --glass-bg: rgba(255, 255, 255, 0.08);
-            --glass-border: rgba(255, 255, 255, 0.12);
-            --glass-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            --text-primary: #ffffff;
-            --text-secondary: rgba(255, 255, 255, 0.85);
-            --text-light: rgba(255, 255, 255, 0.6);
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease-in-out;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
-        }
-
-        body {
-            background: var(--primary-gradient);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            position: relative;
-            overflow-x: hidden;
-        }
-
-        /* Subtle Background Animation */
-        .background-shapes {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            overflow: hidden;
-        }
-
-        .shape {
-            position: absolute;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.03);
-            filter: blur(40px);
-            animation: gentleFloat 15s ease-in-out infinite;
-        }
-
-        .shape-1 {
-            width: 300px;
-            height: 300px;
-            top: 10%;
-            left: 5%;
-            animation-delay: 0s;
-        }
-
-        .shape-2 {
-            width: 250px;
-            height: 250px;
-            top: 60%;
-            right: 10%;
-            animation-delay: 5s;
-        }
-
-        .shape-3 {
-            width: 200px;
-            height: 200px;
-            bottom: 20%;
-            left: 15%;
-            animation-delay: 10s;
-        }
-
-        @keyframes gentleFloat {
-
-            0%,
-            100% {
-                transform: translate(0, 0) scale(1);
-            }
-
-            25% {
-                transform: translate(10px, -15px) scale(1.05);
-            }
-
-            50% {
-                transform: translate(-5px, 10px) scale(0.95);
-            }
-
-            75% {
-                transform: translate(15px, 5px) scale(1.02);
-            }
-        }
-
-        /* Main Layout */
-        .main-wrapper {
-            width: 100%;
-        }
-
-        /* Brand Section */
-        .brand-section {
-            padding: 2rem;
-        }
-
-        .brand-logo {
-            width: 70px;
-            height: 70px;
-            background: var(--accent-gradient);
-            border-radius: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1.5rem;
-            box-shadow: 0 15px 30px rgba(79, 172, 254, 0.3);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .brand-logo::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            transform: rotate(45deg);
-            animation: shine 3s infinite;
-        }
-
-        .brand-logo i {
-            font-size: 1.75rem;
-            color: white;
-            position: relative;
-            z-index: 1;
-        }
-
-        .brand-title {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 0.75rem;
-            background: linear-gradient(135deg, #fff, #e2e8f0);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .brand-subtitle {
-            font-size: 0.95rem;
-            color: var(--text-secondary);
-            line-height: 1.5;
-            margin-bottom: 2.5rem;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 0.875rem;
-            margin: 0 auto;
-        }
-
-        .feature-item {
-            background: rgba(255, 255, 255, 0.06);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            padding: 1.25rem;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        .feature-item:hover {
-            transform: translateY(-3px);
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .feature-icon {
-            width: 36px;
-            height: 36px;
-            background: var(--secondary-gradient);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 0.625rem;
-        }
-
-        .feature-icon i {
-            color: white;
-            font-size: 1rem;
-        }
-
-        .feature-text {
-            color: var(--text-secondary);
-            font-size: 0.8rem;
-            font-weight: 500;
-        }
-
-        /* Auth Form */
-        .auth-container {
-            padding: 2rem;
-        }
-
-        .auth-card {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 18px;
-            padding: 2rem;
-            box-shadow: var(--glass-shadow);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .auth-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.05), transparent);
-            transform: rotate(45deg);
-            animation: cardShine 6s infinite;
-        }
-
-        .auth-header {
-            text-align: center;
-            margin-bottom: 1.75rem;
-            position: relative;
-            z-index: 2;
-        }
-
-        .auth-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 0.375rem;
-        }
-
-        .auth-subtitle {
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-        }
-
-        /* Form Elements */
-        .form-group {
-            margin-bottom: 1.25rem;
-            position: relative;
-            z-index: 2;
-        }
-
-        .form-control {
-            width: 100%;
-            height: 46px;
-            padding: 0.875rem 2.75rem 0.875rem 2.75rem;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1.5px solid rgba(255, 255, 255, 0.15);
-            border-radius: 10px;
-            color: var(--text-primary);
-            font-size: 0.875rem;
-            transition: all 0.3s ease;
-        }
-
-        .form-control::placeholder {
-            color: var(--text-light);
-            font-size: 0.875rem;
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: rgba(255, 255, 255, 0.4);
-            background: rgba(255, 255, 255, 0.12);
-            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
-        }
-
-        .form-control:-webkit-autofill,
-        .form-control:-webkit-autofill:hover,
-        .form-control:-webkit-autofill:focus {
-            -webkit-text-fill-color: var(--text-primary);
-            -webkit-box-shadow: 0 0 0px 1000px rgba(255, 255, 255, 0.05) inset;
-            border: 1.5px solid rgba(255, 255, 255, 0.3);
-            transition: background-color 5000s ease-in-out 0s;
-            font-size: 0.875rem;
-        }
-
-        .form-icon {
-            position: absolute;
-            left: 0.875rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-light);
-            font-size: 0.875rem;
-            z-index: 2;
-        }
-
-        .password-toggle {
-            position: absolute;
-            right: 0.875rem;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            color: var(--text-light);
-            cursor: pointer;
-            padding: 0.375rem;
-            transition: color 0.3s ease;
-            z-index: 2;
-            font-size: 0.875rem;
-        }
-
-        .password-toggle:hover {
-            color: var(--text-primary);
-        }
-
-        .form-options {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.25rem;
-            position: relative;
-            z-index: 2;
-        }
-
-        .form-check {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .form-check-input {
-            width: 16px;
-            height: 16px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 3px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .form-check-input:checked {
-            background: var(--accent-gradient);
-            border-color: rgba(255, 255, 255, 0.5);
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m6 10 3 3 6-6'/%3e%3c/svg%3e");
-        }
-
-        .form-check-label {
-            color: var(--text-secondary);
-            font-size: 0.8rem;
-            cursor: pointer;
-        }
-
-        .forgot-link {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 0.8rem;
-            transition: color 0.3s ease;
-        }
-
-        .forgot-link:hover {
-            color: var(--text-primary);
-        }
-
-        .btn-primary {
-            width: 100%;
-            height: 46px;
-            background: var(--accent-gradient);
-            border: none;
-            border-radius: 10px;
-            color: white;
-            font-size: 0.875rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            position: relative;
-            z-index: 2;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(79, 172, 254, 0.4);
-        }
-
-        .auth-footer {
-            text-align: center;
-            margin-top: 1.25rem;
-            color: var(--text-secondary);
-            font-size: 0.8rem;
-            position: relative;
-            z-index: 2;
-        }
-
-        .auth-footer a {
-            color: var(--text-primary);
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .auth-footer a:hover {
-            text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
-        }
-
-        .alert {
-            padding: 0.875rem;
-            border-radius: 10px;
-            margin-bottom: 1.25rem;
-            border: none;
-            backdrop-filter: blur(10px);
-            font-size: 0.8rem;
-            position: relative;
-            z-index: 2;
-        }
-
-        .alert-success {
-            background: rgba(72, 187, 120, 0.15);
-            color: #48bb78;
-            border: 1px solid rgba(72, 187, 120, 0.3);
-        }
-
-        .alert-danger {
-            background: rgba(245, 101, 101, 0.15);
-            color: #f56565;
-            border: 1px solid rgba(245, 101, 101, 0.3);
-        }
-
-        @keyframes shine {
-            0% {
-                transform: rotate(45deg) translateX(-100%);
-            }
-
-            100% {
-                transform: rotate(45deg) translateX(100%);
-            }
-        }
-
-        @keyframes cardShine {
-
-            0%,
-            100% {
+        @keyframes fadeIn {
+            from {
                 opacity: 0;
+                transform: translateY(-10px);
             }
 
-            50% {
+            to {
                 opacity: 1;
-            }
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .brand-section {
-                padding: 1.5rem;
-            }
-
-            .brand-title {
-                font-size: 1.75rem;
-            }
-
-            .brand-subtitle {
-                font-size: 0.9rem;
-                margin-bottom: 2rem;
-            }
-
-            .features-grid {
-                grid-template-columns: 1fr;
-                gap: 0.75rem;
-                max-width: 280px;
-            }
-
-            .feature-item {
-                padding: 1rem;
-            }
-
-            .auth-card {
-                padding: 1.75rem 1.25rem;
-            }
-
-            .auth-title {
-                font-size: 1.375rem;
-            }
-
-            .auth-subtitle {
-                font-size: 0.85rem;
-            }
-
-            .form-options {
-                flex-direction: column;
-                gap: 0.875rem;
-                align-items: flex-start;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .auth-card {
-                padding: 1.5rem 1rem;
-            }
-
-            .brand-logo {
-                width: 60px;
-                height: 60px;
-            }
-
-            .brand-logo i {
-                font-size: 1.5rem;
-            }
-
-            .brand-title {
-                font-size: 1.5rem;
-            }
-
-            .form-control {
-                height: 44px;
-                font-size: 0.85rem;
-            }
-
-            .btn-primary {
-                height: 44px;
-                font-size: 0.85rem;
+                transform: translateY(0);
             }
         }
     </style>
 </head>
 
-<body>
-    <!-- Subtle Background Shapes -->
-    <div class="background-shapes">
-        <div class="shape shape-1"></div>
-        <div class="shape shape-2"></div>
-        <div class="shape shape-3"></div>
-    </div>
+<body class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
+    <div class="w-full max-w-6xl">
+        <!-- Single Unified Card -->
+        <div class="bg-white rounded-2xl shadow-2xl overflow-hidden">
+            <div class="grid grid-cols-1 lg:grid-cols-2">
 
-    <div class="main-wrapper">
-        <div class="container">
-            <div class="row align-items-center justify-content-center">
                 <!-- Left Side - Branding -->
-                <div class="col-lg-5 col-md-6 mb-5 mb-md-0">
-                    <div class="brand-section">
-                        <div class="brand-logo">
-                            <i class="fas fa-cubes"></i>
+                <div class="bg-gradient-to-br from-blue-600 to-indigo-700 p-8 lg:p-12 text-white">
+                    <!-- Brand Logo -->
+                    <div class="flex justify-center mb-8">
+                        <div class="w-20 h-20 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm border border-white/30">
+                            <i class="fas fa-cubes text-3xl text-white"></i>
                         </div>
-                        <div class="text-center">
-                            <h1 class="brand-title">Invexa</h1>
-                            <p class="brand-subtitle">Advanced Inventory Management System<br>Streamline your business operations</p>
-                        </div>
+                    </div>
 
-                        <div class="features-grid">
-                            <div class="feature-item">
-                                <div class="feature-icon">
-                                    <i class="fas fa-chart-line"></i>
-                                </div>
-                                <div class="feature-text">Real-time Analytics</div>
+                    <!-- Brand Text -->
+                    <div class="text-center mb-12">
+                        <h1 class="text-4xl font-bold mb-4">Invexa</h1>
+                        <p class="text-blue-100 text-lg leading-relaxed">
+                            Advanced Inventory Management System<br>
+                            Streamline your business operations
+                        </p>
+                    </div>
+
+                    <!-- Features Grid -->
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="flex items-center space-x-3 p-4 bg-white/10 rounded-xl backdrop-blur-sm border border-white/20">
+                            <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-chart-line"></i>
                             </div>
-                            <div class="feature-item">
-                                <div class="feature-icon">
-                                    <i class="fas fa-sync"></i>
-                                </div>
-                                <div class="feature-text">Auto Sync</div>
+                            <span class="font-semibold text-sm">Real-time Analytics</span>
+                        </div>
+                        <div class="flex items-center space-x-3 p-4 bg-white/10 rounded-xl backdrop-blur-sm border border-white/20">
+                            <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-sync"></i>
                             </div>
-                            <div class="feature-item">
-                                <div class="feature-icon">
-                                    <i class="fas fa-shield-alt"></i>
-                                </div>
-                                <div class="feature-text">Secure Data</div>
+                            <span class="font-semibold text-sm">Auto Sync</span>
+                        </div>
+                        <div class="flex items-center space-x-3 p-4 bg-white/10 rounded-xl backdrop-blur-sm border border-white/20">
+                            <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-shield-alt"></i>
                             </div>
-                            <div class="feature-item">
-                                <div class="feature-icon">
-                                    <i class="fas fa-rocket"></i>
-                                </div>
-                                <div class="feature-text">Fast Performance</div>
+                            <span class="font-semibold text-sm">Secure Data</span>
+                        </div>
+                        <div class="flex items-center space-x-3 p-4 bg-white/10 rounded-xl backdrop-blur-sm border border-white/20">
+                            <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-rocket"></i>
                             </div>
+                            <span class="font-semibold text-sm">Fast Performance</span>
                         </div>
                     </div>
                 </div>
 
                 <!-- Right Side - Auth Form -->
-                <div class="col-lg-7 col-md-6">
-                    <div class="auth-container">
-                        @yield('content')
+                <div class="p-8 lg:p-12 flex items-center justify-center">
+                    <div class="w-full max-w-md mx-auto">
+                        <!-- Mobile Branding (only shown on small screens) -->
+                        <div class="lg:hidden text-center mb-8">
+                            <div class="w-16 h-16 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-cubes text-2xl text-white"></i>
+                            </div>
+                            <h1 class="text-2xl font-bold text-gray-800 mb-2">Invexa</h1>
+                            <p class="text-gray-600">Inventory Management System</p>
+                        </div>
+
+                        <!-- Form Header -->
+                        <div class="text-center mb-8">
+                            <h2 class="text-3xl font-bold text-gray-900 mb-2">Welcome Back</h2>
+                            <p class="text-gray-600">Sign in to continue to Invexa</p>
+                        </div>
+
+                        <!-- Session Status -->
+                        @if (session('status'))
+                            <div class="mb-6 p-4 bg-green-50 border-l-4 border-green-500 rounded-r-lg flex items-center space-x-3 animate-fade-in">
+                                <i class="fas fa-check-circle text-green-500 text-lg"></i>
+                                <span class="text-green-800 font-medium">{{ session('status') }}</span>
+                            </div>
+                        @endif
+
+                        @if ($errors->any())
+                            <div class="mb-6 p-4 bg-red-50 border-l-4 border-red-500 rounded-r-lg animate-fade-in">
+                                <div class="flex items-center space-x-3 mb-3">
+                                    <i class="fas fa-exclamation-triangle text-red-500 text-lg"></i>
+                                    <span class="text-red-800 font-semibold">Please check the following:</span>
+                                </div>
+                                <div class="space-y-2">
+                                    @foreach ($errors->all() as $error)
+                                        <div class="flex items-center space-x-3 text-red-700 bg-red-100/50 py-2 px-3 rounded-lg">
+                                            <div class="w-2 h-2 bg-red-500 rounded-full flex-shrink-0"></div>
+                                            <span class="text-sm">{{ $error }}</span>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        @endif
+
+                        <form method="POST" action="{{ route('login') }}" class="space-y-6">
+                            @csrf
+                            <!-- Email/Mobile Field -->
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i class="fas fa-user text-gray-400"></i>
+                                </div>
+                                <input id="login" type="text"
+                                    class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:outline focus:outline-blue-500 focus:border-blue-500 transition duration-200 @error('login') border-red-500 @enderror" name="login"
+                                    value="{{ old('login') }}" required autofocus placeholder="Email or Mobile Number">
+                                @error('login')
+                                    <div class="absolute right-0 top-0 mt-3 mr-3 text-red-500">
+                                        <i class="fas fa-exclamation-circle"></i>
+                                    </div>
+                                @enderror
+                            </div>
+
+                            <!-- Password Field -->
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i class="fas fa-lock text-gray-400"></i>
+                                </div>
+                                <input id="password" type="password"
+                                    class="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-xl focus:outline focus:outline-blue-500 focus:border-blue-500 transition duration-200 @error('password') border-red-500 @enderror" name="password"
+                                    required autocomplete="current-password" placeholder="Password">
+                                <button type="button" class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 transition duration-200 password-toggle">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                @error('password')
+                                    <div class="absolute right-8 top-0 mt-3 mr-3 text-red-500">
+                                        <i class="fas fa-exclamation-circle"></i>
+                                    </div>
+                                @enderror
+                            </div>
+
+                            <!-- Remember Me & Options -->
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <input class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-xl" type="checkbox" name="remember" id="remember"
+                                        {{ old('remember') ? 'checked' : '' }}>
+                                    <label for="remember" class="ml-2 text-sm text-gray-700">
+                                        Remember me
+                                    </label>
+                                </div>
+
+                                @if (Route::has('password.request'))
+                                    <a href="{{ route('password.request') }}" class="text-sm text-blue-600 hover:text-blue-800 transition duration-200 font-medium">
+                                        Forgot password?
+                                    </a>
+                                @endif
+                            </div>
+
+                            <!-- Submit Button -->
+                            <button type="submit"
+                                class="w-full bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 text-white py-3 px-4 rounded-xl font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition duration-200 flex items-center justify-center space-x-2">
+                                <i class="fas fa-sign-in-alt"></i>
+                                <span>Sign In</span>
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- Bootstrap 5 JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -610,23 +199,19 @@
             const passwordToggles = document.querySelectorAll('.password-toggle');
             passwordToggles.forEach(toggle => {
                 toggle.addEventListener('click', function() {
-                    const input = this.parentElement.querySelector('.form-control');
-                    const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
-                    input.setAttribute('type', type);
-                    this.querySelector('i').classList.toggle('fa-eye');
-                    this.querySelector('i').classList.toggle('fa-eye-slash');
-                });
-            });
+                    const input = this.closest('.relative').querySelector('input');
+                    const icon = this.querySelector('i');
 
-            // Fix autofill background
-            const inputs = document.querySelectorAll('.form-control');
-            inputs.forEach(input => {
-                setTimeout(() => {
-                    if (input.matches(':-webkit-autofill')) {
-                        input.style.background = 'rgba(255, 255, 255, 0.12)';
-                        input.style.borderColor = 'rgba(255, 255, 255, 0.3)';
+                    if (input.type === 'password') {
+                        input.type = 'text';
+                        icon.classList.remove('fa-eye');
+                        icon.classList.add('fa-eye-slash');
+                    } else {
+                        input.type = 'password';
+                        icon.classList.remove('fa-eye-slash');
+                        icon.classList.add('fa-eye');
                     }
-                }, 100);
+                });
             });
         });
     </script>
